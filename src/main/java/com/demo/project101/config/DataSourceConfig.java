@@ -1,18 +1,15 @@
 package com.demo.project101.config;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -20,9 +17,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 public class DataSourceConfig {
-
-    @Value("${app.tenants}")
-    private List<String> tenants;
 
     @Bean(name = "defaultDataSource")
     public DataSource defaultDataSource(Environment env) {
@@ -63,23 +57,6 @@ public class DataSourceConfig {
         properties.put("hibernate.dialect", env.getProperty("spring.jpa.properties.hibernate.dialect"));
         properties.put("hibernate.show_sql", env.getProperty("spring.jpa.properties.hibernate.show_sql"));
         return properties;
-    }
-
-    @Bean(name = "routingDataSource")
-    public DataSource routingDataSource(@Qualifier("defaultDataSource") DataSource defaultDataSource) {
-        Map<Object, Object> targetDataSources = new HashMap<>();
-        for (String tenant : tenants) {
-            targetDataSources.put(tenant, defaultDataSource);
-        }
-        AbstractRoutingDataSource routingDataSource = new AbstractRoutingDataSource() {
-            @Override
-            protected Object determineCurrentLookupKey() {
-                return TenantContext.getCurrentTenant();
-            }
-        };
-        routingDataSource.setDefaultTargetDataSource(defaultDataSource);
-        routingDataSource.setTargetDataSources(targetDataSources);
-        return routingDataSource;
     }
 }
 

@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 public class LiquibaseConfig {
 
     @Autowired
-    @Qualifier("routingDataSource")
+    @Qualifier("defaultDataSource")
     private DataSource dataSource;
 
     @Value("${app.tenants}")
@@ -31,6 +31,5 @@ public class LiquibaseConfig {
             liquibase.afterPropertiesSet();
         }
     }
-
 }
 
