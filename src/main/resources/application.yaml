@@ -1,3 +1,5 @@
+app:
+  tenants: asia,america
 spring:
   main:
     banner-mode: "off"
@@ -28,8 +30,7 @@ spring:
         format_sql: false
     open-in-view: false
   liquibase:
-    enabled: true
-    change-log: db/changelog/db.changelog.yaml
+    enabled: false
 logging:
   level:
     root: info
