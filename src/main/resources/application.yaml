@@ -1,0 +1,35 @@
+spring:
+  main:
+    banner-mode: "off"
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    host: localhost
+    url: jdbc:postgresql://localhost:5432/test-db
+    username: test
+    password: test@123
+    hikari:
+      connection-timeout: 60000
+      maximum-pool-size: 5
+      idle-timeout: 30000
+      pool-name: SpringBootHikariCP
+      minimum-idle: 3
+      max-lifetime: 1800000
+      connection-test-query: SELECT 1
+      auto-commit: false
+  jpa:
+    hibernate.ddl-auto: none
+    properties.hibernate.temp.use_jdbc_metadata_defaults: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    defer-datasource-initialization: false
+    show-sql: false
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: false
+    open-in-view: false
+  liquibase:
+    enabled: true
+    change-log: db/changelog/db.changelog.yaml
+logging:
+  level:
+    root: info
