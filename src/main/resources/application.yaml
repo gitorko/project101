@@ -30,7 +30,7 @@ spring:
         format_sql: false
     open-in-view: false
   liquibase:
-    enabled: false
+    enabled: false #keep this as false, as we create liquibase programmatically.
 logging:
   level:
     root: info
