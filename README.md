@@ -1,6 +1,6 @@
 # Project101
 
-Spring Boot Postgres - Multi-tenancy & Routing
+Spring Boot & Postgres - Multi-tenancy & Routing
 
 ### Version
 
